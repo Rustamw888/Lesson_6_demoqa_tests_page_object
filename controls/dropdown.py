@@ -7,7 +7,7 @@ class Dropdown:
     def __init__(self, element: Element):
         self.element = element
 
-    def set_by_enter(self, locality='Haryana'):
+    def set_by_enter(self, locality='Delhi'):
         self.element.type(locality).press_enter()
 
     def set_by_click(self, selector='#react-select-3-option-0'):
