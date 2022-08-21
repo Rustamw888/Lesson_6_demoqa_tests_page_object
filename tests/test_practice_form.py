@@ -1,10 +1,10 @@
 from selene import have, command, by
 from selene.support.shared import browser
 from selene.support.shared.jquery_style import s
-from controls import datepicker, tags_input, dropdown, modal_content
+from controls import datepicker, tags_input, dropdown, modal_content, hobbies
 
 
-class student:
+class Student:
     name = 'Rustam'
     surname = 'Tyapaev'
     email = 'test@gmail.com'
@@ -85,15 +85,15 @@ def test_register_student():
     browser.open('/automation-practice-form')
 
     # When
-    s('#firstName').type(student.name)
-    s('#lastName').type(student.surname)
-    s('#userEmail').type(student.email)
+    s('#firstName').type(Student.name)
+    s('#lastName').type(Student.surname)
+    s('#userEmail').type(Student.email)
 
     gender_group = s('#genterWrapper')
     gender_group.all('.custom-radio').element_by(have.exact_text(Gender.other)).click()
 
     mobile_number = s('#userNumber')
-    mobile_number.type(student.mobile_number)
+    mobile_number.type(Student.mobile_number)
 
     calendar = datepicker.DatePicker(browser.element('#dateOfBirthInput'))
     calendar.set_by_enter('19', '12', '1988')
@@ -112,7 +112,6 @@ def test_register_student():
 
     subject = tags_input.TagsInput(browser.element('#subjectsInput'))
     subject.set_by_click(Subjects.computer_science)
-    subject = tags_input.TagsInput(browser.element('#subjectsInput'))
     subject.set_by_click(Subjects.english)
 
     '''
@@ -127,12 +126,8 @@ def test_register_student():
     s('#subjectsInput').type(Subjects.english).press_enter()
     '''
 
-    hobby_checkbox = s(by.text(Hobbies.sports))
-    hobby_checkbox.perform(command.js.scroll_into_view).click()
-    hobby_checkbox = s(by.text(Hobbies.reading))
-    hobby_checkbox.perform(command.js.scroll_into_view).click()
-    hobby_checkbox = s(by.text(Hobbies.music))
-    hobby_checkbox.perform(command.js.scroll_into_view).click()
+    hobbies_ = hobbies.Hobbies(browser.element('#hobbiesWrapper'))
+    hobbies_.mark_by_element([Hobbies.sports, Hobbies.reading, Hobbies.music])
 
     '''
     OR: 
@@ -150,7 +145,7 @@ def test_register_student():
     resource('picture.png'))
     '''
 
-    s('#currentAddress').type(student.current_address)
+    s('#currentAddress').type(Student.current_address)
 
     state = dropdown.Dropdown(s('#react-select-3-input'))
     state.set_by_enter(State.ncr)
@@ -181,15 +176,15 @@ def test_register_student():
     table = modal_content.Table(s('.modal-content').all('tr'))
     table.rows.should(have.exact_texts(
             'Label Values',
-            f'Student Name {student.name} {student.surname}',
-            f'Student Email {student.email}',
+            f'Student Name {Student.name} {Student.surname}',
+            f'Student Email {Student.email}',
             f'Gender {Gender.other}',
-            f'Mobile {student.mobile_number}',
-            f'Date of Birth {student.birth_day} {Months.december[1]},{student.birth_year}',
+            f'Mobile {Student.mobile_number}',
+            f'Date of Birth {Student.birth_day} {Months.december[1]},{Student.birth_year}',
             f'Subjects {Subjects.computer_science}, {Subjects.english}',
             f'Hobbies {Hobbies.sports}, {Hobbies.reading}, {Hobbies.music}',
             'Picture picture.png',
-            f'Address {student.current_address}',
+            f'Address {Student.current_address}',
             f'State and City {State.ncr} {City.delhi}'))
 
     '''

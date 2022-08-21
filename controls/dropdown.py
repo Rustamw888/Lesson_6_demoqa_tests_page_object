@@ -11,5 +11,5 @@ class Dropdown:
         self.element.type(locality).press_enter()
 
     def set_by_click(self, selector='#react-select-3-option-0'):
-         self.element.click()
-         browser.element(selector).perform(command.js.click)
+        self.element.click()
+        browser.element(selector).perform(command.js.click)

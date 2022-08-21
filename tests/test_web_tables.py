@@ -1,4 +1,3 @@
-import pytest
 from selene import have
 from selene.support.by import text
 
@@ -6,20 +5,9 @@ from selene.support.shared import browser
 from selene.support.shared.jquery_style import s, ss
 
 
-@pytest.fixture(scope='session')
-def fixture_part3():
-    browser.open('https://demoqa.com/webtables') \
-        .driver \
-        .set_window_size(1920, 1080)
-    yield
-    browser.close()
-    browser.quit()
-    print("Домашняя работа - завершена!")
-
-
 def test_web_tables_form():
     # открываем страницу с таблицей
-    browser.open('https://demoqa.com/webtables').driver.set_window_size(1920, 1080)
+    browser.open('/webtables')
 
     # удаляем вторую строку
     s("#delete-record-2").click()
